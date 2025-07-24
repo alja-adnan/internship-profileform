@@ -12,28 +12,25 @@ import { useState } from "react"
     formState: { errors },
   } = useForm();
 
-  
- 
-  const [address2, setstreetAddress2] = useState()
-  const [address3, setstreetAddress3] = useState()
   const [countries, setCountries] = useState(Country.getAllCountries())
   const [state, setState] = useState([])
-  const [zip, setZip] = useState()
+
 
   const [selectedCountry,setSelectedCountry]=useState(null);
   const [selectedState, setSelectedState] = useState(null);
-  console.log(countries)
+  //console.log(countries)
 
 
 
   const handleCountryChange=(country)=>{
     setSelectedCountry(country);
     setState(State.getStatesOfCountry(country.isoCode));
-    setCity
+  
   };
   
 function onSubmit(data){
-   console.log("subnitting the form" ,data);
+   console.log("submitting the form" ,data);
+   alert("submitted sucessfully");
 }
 
   return (
@@ -85,24 +82,11 @@ function onSubmit(data){
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Street Address line 2</label>
-              <input
-                id="streetAddress2"
-                placeholder="Street Address line 2"
-                value={address2}
-                onChange={(e) => setstreetAddress2( e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              />
+              <input placeholder="Street Address line 2"{...register("address2")} className="w-full px-3 py-2 border border-gray-300 rounded-md"/>
             </div>
-
             <div className="space-y-2">
               <label  className="block text-sm font-medium text-gray-700">Street Address line 3</label>
-              <input
-                id="streetAddress3"
-                placeholder="Street Address line 3"
-                value={address3}
-                onChange={(e) => setstreetAddress3( e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              />
+              <input  placeholder="Street Address line 3"{...register("address3")} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
             </div>
           </div>
 
@@ -117,8 +101,7 @@ function onSubmit(data){
 
             <div className="space-y-2">
               <label  className="block text-sm font-medium text-gray-700">Country*</label>
-              <select
-                 id="country"
+              <select {...register("country")}
                  value={selectedCountry?.isoCode || ""}
                  onChange={(e)=>handleCountryChange(
                     countries.find((c)=>c.isoCode===e.target.value),
@@ -137,8 +120,8 @@ function onSubmit(data){
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                    <div className="space-y-2">
                    <label  className="block text-sm font-medium text-gray-700">State / Province*</label>
-                   <select  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                       id="state"
+                   <select  className="w-full px-3 py-2 border border-gray-300 rounded-md" 
+                       {...register("state")}
                        value={selectedState}
                        onChange={(e) => setSelectedState( e.target.value)} >
                       <option value="">Select State</option> 
@@ -150,13 +133,7 @@ function onSubmit(data){
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Zip / Postal code*</label>
-              <input
-                id="zipCode"
-                placeholder="Zip / Postal code"
-                value={zip}
-                onChange={(e) => setZip(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              />
+              <input placeholder="Zip / Postal code"{...register("zip")}  className="w-full px-3 py-2 border border-gray-300 rounded-md"/>
             </div>
           </div>
 
@@ -184,4 +161,4 @@ function onSubmit(data){
     </div>
   )
 }
-export default Profile
+export default Profile;
